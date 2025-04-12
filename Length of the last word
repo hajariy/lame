@@ -1,0 +1,9 @@
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        // Trim leading and trailing spaces and split the string into words
+        String[] words = s.trim().split(" ");
+        
+        // The last word is the last element in the array, return its length
+        return words[words.length - 1].length();
+    }
+}
