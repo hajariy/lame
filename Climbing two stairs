@@ -1,0 +1,15 @@
+public class Solution {
+    public int climbStairs(int n) {
+        if (n == 1) return 1;  // Base case
+        int first = 1, second = 2;
+
+        // Iterate from 3 to n, calculating the number of ways for each step
+        for (int i = 3; i <= n; i++) {
+            int temp = first + second;  // Calculate the new number of ways
+            first = second;  // Move first to second
+            second = temp;  // Update second to the new number of ways
+        }
+        
+        return second;  // The result will be stored in second for n >= 2
+    }
+}
