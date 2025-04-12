@@ -1,0 +1,47 @@
+public class Solution {
+    public int divide(int dividend, int divisor) {
+        // Handling edge case of overflow
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE; // Overflow case
+        }
+        
+        // Determine the sign of the result
+        boolean negative = (dividend < 0) != (divisor < 0);
+        
+        // Use absolute values for the division process
+        long dividendAbs = Math.abs((long) dividend); // Use long to avoid overflow
+        long divisorAbs = Math.abs((long) divisor);
+        
+        long result = 0;
+        
+        // Bit shifting approach: subtract multiples of divisor from dividend
+        while (dividendAbs >= divisorAbs) {
+            long tempDivisor = divisorAbs, multiple = 1;
+            
+            // Double the divisor (shift left) as much as possible
+            while (dividendAbs >= (tempDivisor << 1)) {
+                tempDivisor <<= 1;  // Double the divisor
+                multiple <<= 1;     // Double the multiple
+            }
+            
+            // Subtract the largest multiple of divisor from the dividend
+            dividendAbs -= tempDivisor;
+            result += multiple;
+        }
+        
+        // Apply the sign to the result
+        if (negative) {
+            result = -result;
+        }
+        
+        // Clamp the result to the 32-bit signed integer range
+        if (result > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+        if (result < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        
+        return (int) result;
+    }
+}
